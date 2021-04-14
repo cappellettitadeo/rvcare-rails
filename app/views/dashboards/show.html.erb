@@ -1,0 +1,40 @@
+<% content_for :head do %>
+  <%= stylesheet_pack_tag 'dashboards', media: :all %>
+  <%= javascript_pack_tag 'dashboards' %>
+<% end %>
+
+<% content_for :top_menu do %>
+  <div class="btn-group">
+    <button aria-expanded="false" aria-haspopup="true" class="btn btn-primary-outline dropdown-toggle" data-toggle="dropdown" type="button">
+      <i class="fa fa-plus"></i>
+    </button>
+    <div class="dropdown-menu" id="widget-list">
+      <% @widgets.each do |widget| %>
+        <%= link_to widget_path(format: :json, id: widget.id),
+                    class: "dropdown-item #{current_user.dashboard_widget_opened?(widget.identifier)? 'disabled' : ''}",
+                    data: { identifier: widget.identifier } do %>
+            <i class="fa <%= widget.icon %>"></i>
+            <%= widget.name %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<section id="grid">
+  <div class="grid-stack">
+    <% @widgets.each do |widget| %>
+      <% if current_user.dashboard_widget_opened?(widget.identifier) %>
+        <% settings = current_user.dashboard_widget_settings(widget.identifier) %>
+        <div class="grid-stack-item" gs-x="<%= settings[:x_coordinate] %>" gs-y="<%= settings[:y_coordinate] %>" gs-w="<%= settings[:width] %>" gs-h="<%= settings[:height] %>">
+          <div class="grid-stack-item-content">
+            <%= render partial: 'widgets/custom_widget',
+                       locals: { chart_url: widget.processed_chart_url(current_user),
+                                 identifier: widget.identifier,
+                                 name: widget.name } %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</section>

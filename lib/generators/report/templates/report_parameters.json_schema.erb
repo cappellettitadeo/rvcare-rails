@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "properties": { <% parameters.each_with_index do |parameter, index| %>
+    "<%= parameter_name(parameter) %>": { "type": "<%= parameter_type(parameter) %>" }<%= ',' unless index == parameters.size - 1 %><% end %>
+  },
+  "required": <%= parameters.map { |parameter| parameter_name(parameter) } %>
+}

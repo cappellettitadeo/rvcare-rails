@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "properties": {
+    "contract_value": { "type": "integer" },
+    "dealer_share_multiplier": { "type":  "fraction" }
+  },
+  "required": ["contract_value", "dealer_share_multiplier"]
+}

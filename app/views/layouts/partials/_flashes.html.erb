@@ -1,0 +1,12 @@
+<% if flash[:success] %>
+  <%= render partial: 'layouts/partials/flash_success', locals: { message: flash[:success] } %>
+<% end %>
+<% if flash[:notice] %>
+  <%= render partial: 'layouts/partials/flash_info', locals: { message: flash[:notice] } %>
+<% end %>
+<% if flash[:alert] %>
+  <%= render partial: 'layouts/partials/flash_warning', locals: { message: flash[:alert] } %>
+<% end %>
+<% if flash[:error] %>
+  <%= render partial: 'layouts/partials/flash_danger', locals: { message: flash[:error] } %>
+<% end %>

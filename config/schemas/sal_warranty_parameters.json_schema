@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "properties": {
+    "contract_value": { "type": "integer" },
+    "bonus_value": { "type":  "integer" },
+    "new_dealer_value": { "type": "integer" },
+    "dealer_share_value": { "type": "integer" },
+    "new_dealer_date_cutoff": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": ["contract_value", "bonus_value", "new_dealer_value", "dealer_share_value"]
+}

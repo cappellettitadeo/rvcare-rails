@@ -1,0 +1,9 @@
+Description:
+    Generates a report
+
+Example:
+    bin/rails generate report MyPartner
+
+    This will create:
+        app/models/my_partner_report.rb
+        spec/models/my_partner_report_spec.rb

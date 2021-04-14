@@ -1,0 +1,24 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe <%= class_name %>Report, type: :model do
+  subject(:report) { create(:partner_report) }
+
+  let(:entry) { report.entries.first }
+  let(:dealer) { entry.dealer }
+
+  it { is_expected.to validate_presence_of(:parameters) }
+
+  describe '#total' do
+    it 'calculates return' do
+      expect(report.calculate_total_return_amount).to eq(report.entries.sum(&:value))
+    end
+  end
+
+  describe '#dealer_share' do
+    it 'calculates dealer share' do
+      expect(report.calculate_total_dealer_share).to eq(report.entries.sum(&:value))
+    end
+  end
+end

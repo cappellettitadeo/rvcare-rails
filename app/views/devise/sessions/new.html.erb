@@ -1,0 +1,14 @@
+<div class="m-t-40 account-pages">
+  <%= render '/devise/partials/header' %>
+  <div class="account-content">
+    <%= render partial: 'layouts/partials/flashes', locals: { flash: flash } %>
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= f.input :email, required: true, autofocus: true, label: false, placeholder: 'Email', class: 'form-control' %>
+      <%= f.input :password , label: false, required: true, placeholder: 'Password', class: 'form-control' %>
+      <div class="form-group">
+        <%= f.button :submit, 'Sign In', class: 'btn-lg btn-block btn-bordered btn-primary' %>
+      </div>
+      <%= link_to 'Forgot your password?', new_user_password_path(resource_name), class: 'login-link text-muted font-14' %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="card custom-widget">
+  <div class="card-header">
+    <%= name %>
+    <div class="float-right remove-widget-button">
+      <a class="btn-sm btn-outline-danger" href="#" data-widget-identifier="<%= identifier %>">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+  </div>
+  <div class="card-body custom-widget-content">
+    <iframe src="<%= chart_url %>"></iframe>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "properties": {
+    "multiplier_one": { "type": "fraction" },
+    "threshold_one": { "type": "integer" },
+    "multiplier_two": { "type": "fraction" },
+    "threshold_two": { "type": "integer" },
+    "multiplier_three": { "type": "fraction" },
+    "dealer_share_multiplier": { "type": "fraction" }
+  },
+  "required": ["multiplier_one", "threshold_one", "multiplier_two", "threshold_two", "multiplier_three", "dealer_share_multiplier"]
+}

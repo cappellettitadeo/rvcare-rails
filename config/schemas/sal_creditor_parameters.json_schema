@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "properties": {
+    "contract_value": { "type": "integer" },
+    "endorsement_one_value": { "type": "integer" },
+    "endorsement_one_max_multiplier": { "type": "fraction" },
+    "endorsement_one_threshold": { "type": "integer" },
+    "endorsement_two_value": { "type": "integer" },
+    "endorsement_two_max_multiplier": { "type": "fraction" },
+    "endorsement_two_threshold": { "type": "integer" },
+    "endorsement_three_value": { "type": "integer" },
+    "endorsement_three_max_multiplier": { "type": "fraction" },
+    "endorsement_three_threshold": { "type": "integer" },
+    "endorsement_four_value": { "type": "integer" },
+    "endorsement_four_max_multiplier": { "type": "fraction" },
+    "dealer_share_multiplier": { "type": "fraction" },
+    "new_dealer_date_cutoff":  {
+      "type": "string",
+      "format": "date"
+    },
+    "new_dealer_value": { "type":  "integer" },
+    "new_dealer_max_multiplier": { "type": "fraction" }
+},
+  "required": ["contract_value", "endorsement_one_value", "endorsement_one_max_multiplier", "endorsement_one_threshold",
+    "endorsement_two_value", "endorsement_two_max_multiplier", "endorsement_two_threshold", "endorsement_three_value",
+    "endorsement_three_max_multiplier", "endorsement_three_threshold", "endorsement_four_value", "endorsement_four_max_multiplier",
+    "dealer_share_multiplier", "new_dealer_date_cutoff", "new_dealer_value", "new_dealer_max_multiplier"]
+}

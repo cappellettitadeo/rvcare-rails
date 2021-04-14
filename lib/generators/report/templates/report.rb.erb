@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+class <%= class_name %>Report < PartnerReport
+  <%= plural_name.singularize.upcase %>_PARAMETERS_SCHEMA = Rails.root.join('config/schemas/<%= plural_name.singularize %>_parameters.json_schema').to_s
+
+  validates :parameters, presence: true, json: { schema: <%= plural_name.singularize.upcase %>_PARAMETERS_SCHEMA }
+
+  private
+
+  def calculate_value(amount:, multiplier:)
+    amount * multiplier
+  end
+
+  def multiplier(amount:)
+    1
+  end
+
+  def calculate_dealer_share(total:)
+    total
+  end
+end

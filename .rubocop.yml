@@ -1,0 +1,33 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+RSpec/ExampleLength:
+  Max: 15
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/SharedExamples:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/BulkChangeTable:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'spec/**/*.rb'

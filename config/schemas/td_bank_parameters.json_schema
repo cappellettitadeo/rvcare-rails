@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "properties": {
+    "contract_value": { "type": "integer" },
+    "market_share_reached_extra": { "type": "integer" },
+    "first_look_extra": { "type": "integer" },
+    "dealer_share_multiplier": { "type" : "fraction"}
+  },
+  "required": ["contract_value", "market_share_reached_extra", "first_look_extra", "dealer_share_multiplier"]
+}

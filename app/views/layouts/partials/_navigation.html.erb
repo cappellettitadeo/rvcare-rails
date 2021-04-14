@@ -1,0 +1,29 @@
+<nav class='sidebar-nav'>
+  <ul class='nav'>
+    <li class='nav-item'>
+      <%= render 'layouts/partials/dashboard_nav' %>
+    </li>
+
+    <li class='nav-item'>
+      <%= link_to admin_root_path, class: 'nav-link' do %>
+        <i class='nav-icon cil-lock-locked'></i>
+        <%= t(:admin) %>
+      <% end %>
+
+    </li>
+
+    <li class='nav-item'>
+      <%= link_to edit_user_password_path, class: "nav-link disabled" do %>
+        <i class="nav-icon cil-user"></i>
+        <%= t(:profile) %>
+      <% end %>
+    </li>
+
+    <li class='nav-item'>
+      <%= link_to destroy_user_session_path, :method => :delete, class: "nav-link" do %>
+        <i class="nav-icon cil-power-standby"></i>
+        <%= t(:logout) %>
+      <% end %>
+    </li>
+  </ul>
+</nav>

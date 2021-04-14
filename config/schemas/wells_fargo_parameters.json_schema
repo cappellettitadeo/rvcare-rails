@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "properties": {
+    "multiplier_one": { "type": "fraction" },
+    "threshold_one": { "type": "integer" },
+    "multiplier_two": { "type": "fraction" },
+    "threshold_two": { "type": "integer" },
+    "multiplier_three": { "type": "fraction" },
+    "threshold_three": { "type": "integer" },
+    "multiplier_four": { "type": "fraction" },
+    "threshold_four": { "type": "integer" },
+    "multiplier_five": { "type": "fraction" },
+    "threshold_five": { "type": "integer" },
+    "multiplier_six": { "type": "fraction" },
+    "dealer_share_multiplier": { "type": "fraction" }
+  },
+  "required": ["threshold_one", "multiplier_one", "threshold_two", "multiplier_two", "threshold_three", "multiplier_three", "threshold_four", "multiplier_four", "threshold_five", "multiplier_five", "multiplier_six"]
+}

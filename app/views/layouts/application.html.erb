@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RV Care</title>
+  <%= render 'layouts/partials/head' %>
+  <%= yield :head %>
+</head>
+<body class="app">
+<header class="app-header navbar">
+  <div class="d-flex flex-row">
+    <button class="navbar-toggler sidebar-toggler" type="button" data-toggle="sidebar-lg-show">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="nav navbar-nav">
+      <li class="nav-item px-3">
+        <%= render "layouts/partials/dashboard_nav" %>
+      </li>
+      <%= yield :nav_extra %>
+    </ul>
+  </div>
+  <div class="d-flex flex-row">
+    <%= yield :nav_bar %>
+  </div>
+  <%= link_to dashboard_path, class: "navbar-brand" do %>
+    <% image_tag 'logo-header.png', width: 53, height: 53 %>
+  <% end %>
+</header>
+<div class="app-body">
+  <div class="sidebar">
+    <%= render "layouts/partials/navigation" %>
+  </div>
+  <main class="main">
+    <%= yield :top_menu %>
+    <div class="flash_messages">
+      <%= render partial: "layouts/partials/flashes", locals: { flash: flash } %>
+    </div>
+    <div class="container-fluid">
+      <%= yield %>
+    </div>
+  </main>
+</div>
+<footer class="app-footer">
+  <strong>
+    <span>©</span>
+    <%= Date.today.strftime("%Y") %>
+    RV Care
+  </strong>
+  <div class="ml-auto">
+    <%= app_version %>
+  </div>
+</footer>
+</body>
+</html>
