@@ -4,6 +4,10 @@ module ReportsImport
 
     def call; end
 
+    def logs
+      ["logs placeholder"]
+    end
+
     private
   end
 end

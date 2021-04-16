@@ -1,0 +1,14 @@
+<h1>Upload report</h1>
+
+
+<%= simple_form_for(:report_upload, url: report_uploads_path) do |f| %>
+
+  <div class="form-group">
+    <%= f.label :file %>
+    <%= f.file_field :file, label: 'Report', class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
