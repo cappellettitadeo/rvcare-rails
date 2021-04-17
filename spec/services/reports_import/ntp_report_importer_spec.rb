@@ -12,19 +12,18 @@ module ReportsImport
       end
 
       describe '#call' do
+        let(:dealer) { FactoryBot.create(:dealer) }
+
+        subject { NtpReportImporter.new(file: 'fake file', partner: partner_report.partner) }
+
+        before { allow(subject).to receive(:data).and_return(input_data) }
+
         context 'valid input data' do
-          let(:dealer) { FactoryBot.create(:dealer) }
           let(:input_data) do
             [
               { ntp_account: dealer.id, amount: 10, reported_on: "#{year}-04-10" },
               { ntp_account: dealer.id, amount: 17, reported_on: "#{year}-04-11" },
             ]
-          end
-
-          subject { NtpReportImporter.new(file: 'fake file', partner: partner_report.partner) }
-
-          before do
-            allow(subject).to receive(:data).and_return(input_data)
           end
 
           it 'adds records to entries table' do
@@ -40,6 +39,18 @@ module ReportsImport
             expect(entries.map(&:dealer_id)).to all(eq(dealer.id))
             expect(entries.map(&:reported_on)).to contain_exactly(Date.parse("2021-04-10"), Date.parse("2021-04-11"))
             expect(entries.map(&:value)).to contain_exactly(10, 17)
+          end
+        end
+
+        context 'wrong dealer_id' do
+          let(:input_data) do
+            [
+              { ntp_account: 'unexistent dealer id', amount: 10, reported_on: "#{year}-04-10" }
+            ]
+          end
+
+          it "doesn't create new entry" do
+            expect { subject.call }.to_not change(Entry, 'count').from(0)
           end
         end
       end
