@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resource :dashboard, only: %i[show update]
   resources :widgets, only: [:show]
   resources :dealers, only: %i[edit update]
+  resources :report_uploads, only: [:new, :create]
 
   root 'dashboards#show'
 end
