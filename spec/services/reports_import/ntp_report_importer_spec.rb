@@ -12,23 +12,27 @@ module ReportsImport
       end
 
       describe '#call' do
-        let(:dealer) { FactoryBot.create(:dealer) }
-        let(:input_data) do
-          [
-            { ntp_account: dealer.id, amount: 10, reported_on: "#{year}-04-10" },
-            { ntp_account: dealer.id, amount: 17, reported_on: "#{year}-04-11" },
-          ]
-        end
-
         context 'valid input data' do
-          subject { NtpReportImporter.new(data: input_data, partner: partner_report.partner).call }
+          let(:dealer) { FactoryBot.create(:dealer) }
+          let(:input_data) do
+            [
+              { ntp_account: dealer.id, amount: 10, reported_on: "#{year}-04-10" },
+              { ntp_account: dealer.id, amount: 17, reported_on: "#{year}-04-11" },
+            ]
+          end
+
+          subject { NtpReportImporter.new(file: 'fake file', partner: partner_report.partner) }
+
+          before do
+            allow(subject).to receive(:data).and_return(input_data)
+          end
 
           it 'adds records to entries table' do
-            expect { subject }.to change(Entry, 'count').by(input_data.size)
+            expect { subject.call }.to change(Entry, 'count').by(input_data.size)
           end
 
           it 'saves the correct data', :aggregate_failures do
-            subject
+            subject.call
             entries = Entry.last(2)
 
             expect(entries.map(&:type)).to all(eq("Sales"))

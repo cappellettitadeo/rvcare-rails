@@ -1,12 +1,12 @@
 module ReportsImport
   class NtpReportImporter
-    def initialize(partner: , data:)
+    def initialize(partner: , file:)
       @partner = partner
-      @data = data
+      @file = file
     end
 
     def call
-      @data.each do |line|
+      data.each do |line|
         Sales.create(
           partner_report_id: partner_report.id,
           dealer_id: line[:ntp_account],
@@ -21,6 +21,10 @@ module ReportsImport
     end
 
     private
+
+    def data
+      @data ||= SmarterCSV.process(@file)
+    end
 
     def partner_report
       @partner_report ||= @partner.current_report

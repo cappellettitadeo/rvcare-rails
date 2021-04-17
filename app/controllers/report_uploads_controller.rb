@@ -6,11 +6,8 @@ class ReportUploadsController < ApplicationController
 
   def create
     report_file = params[:report_upload][:file]
-    importer = ReportsImport::TypeDetector.new(report_file).importer
-    importer.call
-    @logs = importer.logs
-
+    @importer = ReportsImport::Dispatcher.get_importer(current_user, report_file)
+    @importer.call
     render 'operation_logs'
   end
-
 end
