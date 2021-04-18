@@ -5,7 +5,7 @@ class Partner < ApplicationRecord
 
   resourcify
 
-  def current_report
-    partner_reports.find_by(year: Date.today.year)
+  def current_ntp_report
+    partner_reports.find_by(type: "NtpReport", year: Date.today.year)
   end
 end
