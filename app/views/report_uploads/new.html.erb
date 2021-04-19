@@ -4,11 +4,13 @@
 <%= simple_form_for(:report_upload, url: report_uploads_path) do |f| %>
 
   <div class="form-group">
-    <%= f.label :file %>
-    <%= f.file_field :file, label: 'Report', class: 'form-control' %>
+    <div class="custom-file">
+      <%= f.file_field :file, label: 'Report', class: 'custom-file-input form-control-md' %>
+      <%= f.label :file, 'Choose file', class: 'custom-file-label' %>
+    </div>
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Upload', class: 'btn btn-primary' %>
   </div>
 <% end %>
