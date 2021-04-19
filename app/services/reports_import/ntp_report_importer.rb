@@ -2,13 +2,13 @@
 
 module ReportsImport
   class NtpReportImporter < BaseImporter
-    def initialize(partner: , file:)
-      @partner = partner
+    def initialize(partner_report: , file:)
+      @partner_report = partner_report
       @file = file
     end
 
     def call
-      return if data.nil? || partner_report.nil?
+      return if data.nil?
 
       data.each do |data_item|
         store_sales_data(data_item)
@@ -29,18 +29,12 @@ module ReportsImport
     end
 
     def partner_report
-      @partner_report ||= begin
-        if (result = @partner.current_ntp_report).nil?
-          register_error "To start data import you need to create Ntp Report for #{Date.today.year} year"
-        end
-
-        result
-      end
+      @partner_report
     end
 
     def store_sales_data(data_item)
       unless (dealer = Dealer.find_by(ntp_account: data_item[:ntp_account]))
-        add_logs(data_item, "error: dealer not found (ntp account #{data_item[:ntp_account].inspect})")
+        add_logs(data_item, "error: dealer not found")
         return
       end
 

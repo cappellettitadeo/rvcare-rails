@@ -70,6 +70,10 @@ class PartnerReport < ApplicationRecord
     {}
   end
 
+  def importer(_file)
+    raise "The #importer method must be implemented in #{self.class} class"
+  end
+
   private
 
   def calculate_return_amount(*)

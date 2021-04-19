@@ -13,6 +13,10 @@ class NtpReport < PartnerReport
     }
   end
 
+  def importer(file)
+    ReportsImport::NtpReportImporter.new(partner_report: self, file: file)
+  end
+
   private
 
   def calculate_return_amount(**)

@@ -14,7 +14,7 @@ module ReportsImport
       describe '#call' do
         let(:dealer) { FactoryBot.create(:dealer, ntp_account: 6.times.map { rand(10).to_s }.join) }
 
-        subject { NtpReportImporter.new(file: 'fake file', partner: partner_report.partner) }
+        subject { NtpReportImporter.new(file: 'fake file', partner_report: partner_report) }
 
         before do
           allow(subject).to receive(:data).and_return(input_data)
