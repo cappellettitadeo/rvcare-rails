@@ -34,7 +34,7 @@ module ReportsImport
 
     def store_sales_data(data_item)
       unless (dealer = Dealer.find_by(ntp_account: data_item[:ntp_account]))
-        add_logs(data_item, "error: dealer not found")
+        add_logs(false, "error: dealer not found", data_item)
         return
       end
 
@@ -47,9 +47,9 @@ module ReportsImport
       # Update existing entry
       if (existing_entry = Sales.find_by(params))
         if existing_entry.update(value: data_item[:amount])
-          add_logs(data_item, 'updated')
+          add_logs(true, 'updated', data_item)
         else
-          add_logs(data_item, "error: #{existing_entry.errors.full_messages.to_sentence}")
+          add_logs(false, "error: #{existing_entry.errors.full_messages.to_sentence}", data_item)
         end
 
         return
@@ -59,14 +59,10 @@ module ReportsImport
       new_entry = Sales.new(params.merge(value: data_item[:amount]))
 
       if new_entry.save
-        add_logs(data_item, 'created')
+        add_logs(true, 'created', data_item)
       else
-        add_logs(data_item, "error: #{new_entry.errors.full_messages.to_sentence}")
+        add_logs(false, "error: #{new_entry.errors.full_messages.to_sentence}", data_item)
       end
-    end
-
-    def add_logs(data_item, message)
-      logs << "#{data_item.inspect}: #{message}"
     end
   end
 end

@@ -1,5 +1,11 @@
-<h1>Operation Logs</h1>
+<h1><%= @importer.name %> Operation Logs</h1>
 
-<% @importer.logs.each do |line| %>
-  <p><%= line %></p>
-<% end %>
+<h3><%= @importer.operation_stats %></h3>
+
+<figure class="highlight">
+  <pre><code>
+    <% @importer.logs.each do |line| %>
+      <span class="nx"><%= line[:data_item] %>: <%= line[:message] %></span>
+    <% end %>
+  </code></pre>
+</figure>
