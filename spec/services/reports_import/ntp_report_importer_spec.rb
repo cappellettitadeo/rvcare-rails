@@ -8,21 +8,23 @@ module ReportsImport
 
     context 'ntp reports' do
       let!(:partner_report) do
-        FactoryBot.create(:partner_report, year: year)
+        FactoryBot.create(:partner_report, year: year, type: 'NtpReport')
       end
 
       describe '#call' do
-        let(:dealer) { FactoryBot.create(:dealer) }
+        let(:dealer) { FactoryBot.create(:dealer, ntp_account: 6.times.map { rand(10).to_s }.join) }
 
         subject { NtpReportImporter.new(file: 'fake file', partner: partner_report.partner) }
 
-        before { allow(subject).to receive(:data).and_return(input_data) }
+        before do
+          allow(subject).to receive(:data).and_return(input_data)
+        end
 
         context 'valid input data' do
           let(:input_data) do
             [
-              { ntp_account: dealer.id, amount: 10, reported_on: "#{year}-04-10" },
-              { ntp_account: dealer.id, amount: 17, reported_on: "#{year}-04-11" },
+              { ntp_account: dealer.ntp_account, amount: 10, reported_on: "#{year}-04-10" },
+              { ntp_account: dealer.ntp_account, amount: 17, reported_on: "#{year}-04-11" },
             ]
           end
 
@@ -45,11 +47,12 @@ module ReportsImport
         context 'wrong dealer_id' do
           let(:input_data) do
             [
-              { ntp_account: 'unexistent dealer id', amount: 10, reported_on: "#{year}-04-10" }
+              { ntp_account: 'unexistent ntp account', amount: 10, reported_on: "#{year}-04-10" }
             ]
           end
 
           it "doesn't create new entry" do
+            Entry.delete_all
             expect { subject.call }.to_not change(Entry, 'count').from(0)
           end
         end

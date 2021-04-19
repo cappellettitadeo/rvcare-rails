@@ -39,14 +39,14 @@ module ReportsImport
     end
 
     def store_sales_data(data_item)
-      unless Dealer.exists?(id: data_item[:ntp_account])
-        add_logs(data_item, "error: unknown dealer id (#{data_item[:ntp_account].inspect})")
+      unless (dealer = Dealer.find_by(ntp_account: data_item[:ntp_account]))
+        add_logs(data_item, "error: dealer not found (ntp account #{data_item[:ntp_account].inspect})")
         return
       end
 
       params = {
         partner_report_id: partner_report.id,
-        dealer_id: data_item[:ntp_account],
+        dealer_id: dealer.id,
         reported_on: data_item[:reported_on]
       }
 
