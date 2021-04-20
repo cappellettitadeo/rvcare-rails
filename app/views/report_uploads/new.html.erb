@@ -1,5 +1,19 @@
 <h1>Upload report</h1>
 
+<% if current_user.partner&.current_report&.type == 'NtpReport' %>
+  <div class="mt-4 mb-4">
+    <h3>Report example</h3>
+    <p>Here you can see the example of the correct format of the NTP report csv file:</p>
+    <div class="p-3 mb-2 bg-light text-dark">
+      <samp>
+        ntp_account, amount, reported_on<br>
+        110173, 6, 2021-04-10<br>
+        106469, 9, 2021-04-10<br>
+        114456, 7, 2021-04-10
+      </samp>
+    </div>
+  </div>
+<% end %>
 
 <%= simple_form_for(:report_upload, url: report_uploads_path) do |f| %>
 

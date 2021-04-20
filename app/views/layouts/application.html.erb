@@ -16,11 +16,14 @@
         <%= render "layouts/partials/dashboard_nav" %>
       </li>
 
-      <li class='nav-item px-3'>
-        <%= link_to new_report_upload_path, class: 'nav-link' do %>
-          <%= t(:upload_report) %>
-        <% end %>
-      </li>
+      <% if current_user.partner&.current_report %>
+        <li class='nav-item px-3'>
+          <%= link_to new_report_upload_path, class: 'nav-link' do %>
+            <%= t(:upload_report) %>
+          <% end %>
+        </li>
+      <% end %>
+
       <%= yield :nav_extra %>
     </ul>
   </div>
