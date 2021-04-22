@@ -2,6 +2,16 @@
 
 module ReportsImport
   class BaseImporter
+    def initialize(partner_report: , file:)
+      @partner_report = partner_report
+      @file = file
+    end
+
+    def call
+      return if data.nil?
+      data.each { |data_item| import(data_item) }
+    end
+
     def logs
       @logs ||= []
     end
@@ -21,6 +31,17 @@ module ReportsImport
     end
 
     private
+
+    def data
+      @data ||= SmarterCSV.process(@file)
+    rescue StandardError => e
+      register_error "Processing csv file error (#{@file.original_filename})", e
+      nil
+    end
+
+    def partner_report
+      @partner_report
+    end
 
     def register_error(message, exception=nil)
       errors << { message: message, exception: exception }

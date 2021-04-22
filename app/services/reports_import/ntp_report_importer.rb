@@ -2,37 +2,13 @@
 
 module ReportsImport
   class NtpReportImporter < BaseImporter
-    def initialize(partner_report: , file:)
-      @partner_report = partner_report
-      @file = file
-    end
-
-    def call
-      return if data.nil?
-
-      data.each do |data_item|
-        store_sales_data(data_item)
-      end
-    end
-
     def name
       'NTP Report'
     end
 
     private
 
-    def data
-      @data ||= SmarterCSV.process(@file)
-    rescue StandardError => e
-      register_error "Processing csv file error (#{@file.original_filename})", e
-      nil
-    end
-
-    def partner_report
-      @partner_report
-    end
-
-    def store_sales_data(data_item)
+    def import(data_item)
       unless (dealer = Dealer.find_by(ntp_account: data_item[:ntp_account]))
         add_logs(false, "error: dealer not found", data_item)
         return
