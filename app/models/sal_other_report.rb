@@ -14,6 +14,10 @@ class SalOtherReport < SalReport
     }
   end
 
+  def importer(file)
+    ReportsImport::SalOtherReportImporter.new(partner_report: self, file: file)
+  end
+
   private
 
   def calculate_return_amount(scoped_units:, **)
