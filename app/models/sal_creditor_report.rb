@@ -28,6 +28,10 @@ class SalCreditorReport < SalReport
     }
   end
 
+  def importer(file)
+    ReportsImport::SalCreditorReportImporter.new(partner_report: self, file: file)
+  end
+
   private
 
   def calculate_return_amount(scoped_units:, **)

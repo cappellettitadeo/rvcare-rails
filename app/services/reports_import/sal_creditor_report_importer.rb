@@ -9,7 +9,7 @@ module ReportsImport
     private
 
     def import(data_item)
-      unless (dealer = Dealer.find_by(sal_account: data_item[:sal_account]))
+      unless data_item[:sal_account] && (dealer = Dealer.find_by(sal_account: data_item[:sal_account]))
         add_logs(false, "error: dealer not found", data_item)
         return
       end
@@ -28,7 +28,7 @@ module ReportsImport
       # Update existing entry
       if (existing_entry = entry_subclass.find_by(params))
         if existing_entry.update(value: value)
-          add_logs(true, 'updated', data_item)
+          add_logs(true, "#{entry_subclass} updated", data_item)
         else
           add_logs(false, "error: #{existing_entry.errors.full_messages.to_sentence}", data_item)
         end
@@ -40,7 +40,7 @@ module ReportsImport
       new_entry = entry_subclass.new(params.merge(value: value))
 
       if new_entry.save
-        add_logs(true, 'created', data_item)
+        add_logs(true, "#{entry_subclass} created", data_item)
       else
         add_logs(false, "error: #{new_entry.errors.full_messages.to_sentence}", data_item)
       end

@@ -4,6 +4,7 @@ class ReportUploadsController < ApplicationController
   before_action :set_importer, only: :create
 
   def new
+    @report_type = current_user.partner&.current_report&.type
   end
 
   def create

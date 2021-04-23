@@ -1,0 +1,20 @@
+<div class="mt-4 mb-4">
+  <h3>Report example</h3>
+  <p>Here you can see the example of the correct format of the <%= type %> csv file:</p>
+  <div class="p-3 mb-2 bg-light text-dark">
+    <samp>
+      <% case type %>
+      <% when 'NtpReport' %>
+        ntp_account, amount, reported_on<br>
+        110173, 6, 2021-04-10<br>
+        106469, 9, 2021-04-10<br>
+        114456, 7, 2021-04-10
+      <% when 'SalCreditorReport' %>
+        sal_account, amount, units, reported_on<br>
+        110173, 6, 2, 2021-04-10<br>
+        106469, 9, 3, 2021-04-10<br>
+        114456, 7, 1, 2021-04-10
+      <% end%>
+    </samp>
+  </div>
+</div>
