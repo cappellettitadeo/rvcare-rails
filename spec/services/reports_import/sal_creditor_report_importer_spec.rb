@@ -167,7 +167,7 @@ module ReportsImport
               expect(subject.logs).to \
                 contain_exactly(
                   a_hash_including(success: false, message: /error: .+ can't be blank/),
-                  a_hash_including(success: true, message: 'created')
+                  a_hash_including(success: true, message: 'Units created')
                 )
             end
           end
@@ -191,7 +191,7 @@ module ReportsImport
               expect(subject.logs).to \
                 contain_exactly(
                   a_hash_including(success: false, message: /error: .+ can't be blank/),
-                  a_hash_including(success: true, message: 'created')
+                  a_hash_including(success: true, message: 'Sales created')
                 )
             end
           end
