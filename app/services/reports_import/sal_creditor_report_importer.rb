@@ -8,8 +8,8 @@ module ReportsImport
 
     private
 
-    def dealer_identification(data_item)
-      { sal_account: data_item[:sal_account] }
+    def dealer_id_key
+      :sal_account
     end
 
     def perform_import_actions(params, data_item)

@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 module ReportsImport
-  class NtpReportImporter < BaseImporter
+  class SimpleSalesReportImporter < BaseImporter
     def name
-      'NTP Report'
+      'Simple Sales Report'
     end
 
     private
 
     def dealer_id_key
-      :ntp_account
+      :sal_account
     end
 
     def perform_import_actions(params, data_item)

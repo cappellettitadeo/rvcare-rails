@@ -33,7 +33,9 @@ module ReportsImport
     private
 
     def import(data_item)
-      unless (dealer = Dealer.find_by(dealer_identification(data_item)))
+      custom_id = data_item[dealer_id_key]
+
+      unless custom_id && (dealer = Dealer.find_by(dealer_id_key => custom_id))
         add_logs(false, "error: dealer not found", data_item)
         return
       end
