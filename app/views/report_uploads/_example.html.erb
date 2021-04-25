@@ -24,6 +24,11 @@
         amount, reported_on<br>
         QC000158, 55, 2021-04-10<br>
         QC007018, 56, 2021-04-10
+      <% when 'SimpleUnitsReport' %>
+        <%= current_user.partner.custom_dealer_id || 'sal_account' %>,
+        units, reported_on<br>
+        QC000158, 55, 2021-04-10<br>
+        QC007018, 56, 2021-04-10
       <% end%>
     </samp>
   </div>
