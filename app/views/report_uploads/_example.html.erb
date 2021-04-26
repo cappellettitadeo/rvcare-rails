@@ -19,7 +19,7 @@
         QC000158, 2, 2021-04-10<br>
         QC007018, 3, 2021-04-10<br>
         ON000196, 1, 2021-04-10
-      <% when 'SimpleSalesReport' %>
+      <% when 'SimpleSalesReport', 'EastPennReport' %>
         <%= current_user.partner.custom_dealer_id || 'sal_account' %>,
         amount, reported_on<br>
         QC000158, 55, 2021-04-10<br>

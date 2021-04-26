@@ -19,6 +19,10 @@ class EastPennReport < PartnerReport
     }
   end
 
+  def importer(file)
+    ReportsImport::SimpleSalesReportImporter.new(file: file, partner_report: self)
+  end
+
   private
 
   def calculate_return_amount(scoped_sales:, **)
