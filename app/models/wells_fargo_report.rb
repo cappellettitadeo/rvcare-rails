@@ -25,6 +25,10 @@ class WellsFargoReport < PartnerReport
     }
   end
 
+  def importer(file)
+    ReportsImport::WellsFargoReportImporter.new(partner_report: self, file: file)
+  end
+
   private
 
   def calculate_return_amount(scoped_sales:, **)

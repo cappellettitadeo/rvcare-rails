@@ -29,6 +29,13 @@
         units, reported_on<br>
         QC000158, 55, 2021-04-10<br>
         QC007018, 56, 2021-04-10
+      <% when 'WellsFargoReport' %>
+        <%= current_user.partner.custom_dealer_id || 'wells_fargo_account' %>,
+        amount, reported_on<br>
+        102971, 55, 2021-04-10<br>
+        199818, 56, 2021-04-10<br>
+        212676, 100, 2021-04-10<br>
+        102971, 1, 2021-04-12
       <% end%>
     </samp>
   </div>
