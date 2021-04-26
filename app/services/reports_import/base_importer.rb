@@ -52,7 +52,7 @@ module ReportsImport
     def store_entry(entry_subclass, params, value, data_item)
       # Update existing entry
       if (existing_entry = entry_subclass.find_by(params))
-        if existing_entry.update(value: value)
+        if existing_entry.update(value: value, extra: extra(data_item))
           add_logs(true, "#{entry_subclass} updated", data_item)
         else
           add_logs(false, "error: #{existing_entry.errors.full_messages.to_sentence}", data_item)
@@ -62,7 +62,7 @@ module ReportsImport
       end
 
       # Create new
-      new_entry = entry_subclass.new(params.merge(value: value))
+      new_entry = entry_subclass.new(params.merge(value: value, extra: extra(data_item)))
 
       if new_entry.save
         add_logs(true, "#{entry_subclass} created", data_item)
@@ -92,6 +92,14 @@ module ReportsImport
         message: message,
         data_item: data_item
       })
+    end
+
+    def extra(_data_item)
+      nil
+    end
+
+    def to_bool(value)
+      ActiveModel::Type::Boolean.new.cast(value.to_s.downcase)
     end
   end
 end
