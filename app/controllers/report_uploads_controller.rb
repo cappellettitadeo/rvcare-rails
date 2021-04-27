@@ -8,6 +8,8 @@ class ReportUploadsController < ApplicationController
   end
 
   def new_admin
+    return redirect_to root_url unless is_admin?
+
     @partners_select = PartnerReport
       .includes(:partner)
       .where(year: Date.today.year)
@@ -54,7 +56,7 @@ class ReportUploadsController < ApplicationController
 
   def is_admin?
     return true if current_user.admin
-    flash[:error] = 'You have no permissions for reports uploading'
+    flash[:error] = 'You have no permissions for this action'
     false
   end
 
