@@ -9,8 +9,7 @@ module ReportsImport
     private
 
     def dealer_id_key
-      @dealer_id_key ||=
-        @partner_report.partner.custom_dealer_id&.to_sym || :sal_account
+      :td_account
     end
 
     def perform_import_actions(params, data_item)

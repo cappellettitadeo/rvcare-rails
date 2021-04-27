@@ -30,10 +30,9 @@
         QC000158, 55, 2021-04-10<br>
         QC007018, 56, 2021-04-10
       <% when 'TdBankReport' %>
-        <%= current_user.partner.custom_dealer_id || 'sal_account' %>,
-        units, units, reported_on, market_share_reached, first_look<br>
-        QC000158, 55, 2021-04-10, true, false<br>
-        QC007018, 56, 2021-04-10, false, true<br>
+        td_account, units, reported_on, market_share_reached, first_look<br>
+        123456, 55, 2021-04-10, false, true<br>
+        789012, 56, 2021-04-10, true, false
       <% when 'WellsFargoReport' %>
         <%= current_user.partner.custom_dealer_id || 'wells_fargo_account' %>,
         amount, reported_on<br>

@@ -11,7 +11,7 @@ module ReportsImport
     end
 
     describe '#call' do
-      let(:dealer) { FactoryBot.create(:dealer, sal_account: 6.times.map { rand(10).to_s }.join) }
+      let(:dealer) { FactoryBot.create(:dealer, td_account: 6.times.map { rand(10).to_s }.join) }
       let(:fake_file) { instance_double('ActionDispatch::Http::UploadedFile', original_filename: 'fake file') }
 
       subject { described_class.new(file: fake_file, partner_report: partner_report) }
@@ -21,9 +21,9 @@ module ReportsImport
 
         let(:input_data) do
           [
-            { sal_account: dealer.sal_account, units: 10, reported_on: "#{year}-04-10", market_share_reached: 'true',
+            { td_account: dealer.td_account, units: 10, reported_on: "#{year}-04-10", market_share_reached: 'true',
         first_look: 'true' },
-            { sal_account: dealer.sal_account, units: 17, reported_on: "#{year}-04-11", market_share_reached: 'false',
+            { td_account: dealer.td_account, units: 17, reported_on: "#{year}-04-11", market_share_reached: 'false',
         first_look: 'false' },
           ]
         end
@@ -51,9 +51,9 @@ module ReportsImport
         context 'report is uploaded the second time' do
           let(:input_data) do
             [
-              { sal_account: dealer.sal_account, units: 10, reported_on: "#{year}-04-10", market_share_reached: 'true',
+              { td_account: dealer.td_account, units: 10, reported_on: "#{year}-04-10", market_share_reached: 'true',
         first_look: 'true' },
-              { sal_account: dealer.sal_account, units: 17, reported_on: "#{year}-04-11", market_share_reached: 'false',
+              { td_account: dealer.td_account, units: 17, reported_on: "#{year}-04-11", market_share_reached: 'false',
         first_look: 'false' },
             ]
           end
@@ -118,7 +118,7 @@ module ReportsImport
           before { allow(subject).to receive(:data).and_return(input_data) }
 
           let(:input_data) do
-            [{ sal_account: 'unexistent sal account', units: 10, reported_on: "#{year}-04-10" }]
+            [{ td_account: 'unexistent sal account', units: 10, reported_on: "#{year}-04-10" }]
           end
 
           it "doesn't create new entry" do
@@ -142,7 +142,7 @@ module ReportsImport
             end
 
             let(:input_data) do
-              [{ sal_account: dealer.sal_account, units: 10, reported_on: "#{year}-04-10" }]
+              [{ td_account: dealer.td_account, units: 10, reported_on: "#{year}-04-10" }]
             end
 
             it "doesn't create new entry" do
