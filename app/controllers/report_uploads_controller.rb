@@ -7,6 +7,16 @@ class ReportUploadsController < ApplicationController
     @report_type = current_user.partner&.current_report&.type
   end
 
+  def new_admin
+    @partners_select = PartnerReport
+      .includes(:partner)
+      .where(year: Date.today.year)
+      .map(&:partner)
+      .compact
+      .map { |pr| [pr.name, pr.id] }
+      .sort_by(&:first)
+  end
+
   def create
     return redirect_to(root_url) unless @importer
 
@@ -21,16 +31,34 @@ class ReportUploadsController < ApplicationController
   private
 
   def set_importer
-    if (partner = current_user.partner).nil?
-      flash[:error] = 'You have no permissions for reports uploading'
-      return
-    end
+    return if (partner = get_partner).nil?
 
     if (report = partner.current_report).nil?
       flash[:error] = "To start data import you need to create a partner report for #{Date.today.year} year"
       return
     end
 
-    @importer = report.importer(params[:report_upload][:file])
+    @importer = report.importer(upload_params[:file])
+  end
+
+  def get_partner
+    if upload_params[:admin] == 'true'
+      return unless is_admin?
+      partner = Partner.find(upload_params[:partner_id])
+    elsif (partner = current_user.partner).nil?
+      flash[:error] = 'You have no permissions for reports uploading'
+    end
+
+    partner
+  end
+
+  def is_admin?
+    return true if current_user.admin
+    flash[:error] = 'You have no permissions for reports uploading'
+    false
+  end
+
+  def upload_params
+    params.require(:report_upload)
   end
 end

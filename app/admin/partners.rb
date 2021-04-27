@@ -20,7 +20,12 @@ ActiveAdmin.register Partner do
     selectable_column
     id_column
     column :name
-    actions
+    actions do |partner|
+      if partner.current_report
+        link_to 'Upload Reprot', new_admin_report_uploads_path(partner_id: partner.id),
+          target: '_blank', class: 'member_link'
+      end
+    end
   end
 
   filter :name

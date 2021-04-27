@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <h1>Upload report as admin</h1>
+
+  <%= render partial: 'example', locals: { type: @report_type } if @report_type %>
+
+  <%= simple_form_for(:report_upload, url: report_uploads_path) do |f| %>
+    <%= f.hidden_field :admin, value: true %>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <%= f.input :partner_id, collection: @partners_select, class: 'form-control', prompt: 'Select partner', label: false, selected: params[:partner_id] %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <div class="custom-file">
+            <%= f.file_field :file, label: 'Report', class: 'custom-file-input form-control-md' %>
+            <%= f.label :file, 'Choose file', class: 'custom-file-label' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Upload', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

@@ -18,7 +18,7 @@ RSpec.describe 'ReportUploads', type: :request do
       end
     end
 
-    context 'signed in' do
+    context 'as partner' do
       before { sign_in user }
 
       context "correct way" do
@@ -65,6 +65,49 @@ RSpec.describe 'ReportUploads', type: :request do
           subject
           expect(response).to redirect_to(new_report_upload_url)
           expect(flash[:error]).to include('Processing csv file error')
+        end
+      end
+    end
+
+    context 'as admin' do
+      let(:admin) { FactoryBot.create :user, :admin }
+
+      before { sign_in admin }
+
+      subject do
+        post '/report_uploads', params: {
+          report_upload: { admin: 'true', file: file, partner_id: ntp_report.partner_id }
+        }
+      end
+
+      context "correct way" do
+        before do
+          user.partner = ntp_report.partner
+          FactoryBot.create :dealer, ntp_account: "110173"
+          FactoryBot.create :dealer, ntp_account: "106469"
+        end
+
+        it 'responses with OK (200)' do
+          subject
+          expect(response.status).to eq(200)
+        end
+
+        it 'creates Sales records' do
+          expect { subject }.to change(Sales, :count).from(0).to(2)
+        end
+      end
+
+      context 'user dont have admin permissions' do
+        let(:admin) { FactoryBot.create :user }
+
+        it 'redirects to root url', :aggregate_failures do
+          subject
+          expect(response).to redirect_to(root_url)
+          expect(flash[:error]).to include('no permissions for reports uploading')
+        end
+
+        it 'doesnt create new Sales records' do
+          expect { subject }.to_not change(Sales, :count).from(0)
         end
       end
     end
