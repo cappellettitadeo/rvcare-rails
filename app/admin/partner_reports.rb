@@ -28,8 +28,9 @@ ActiveAdmin.register PartnerReport do
     column :calculate_total_rvcare_share
     column :calculate_total_dealer_share
     actions do |report|
-      if report.year == Date.today.year
-        link_to 'Upload Reprot', new_admin_report_uploads_path(partner_id: report.partner_id),
+      year = Date.today.year
+      if report.year.in? [year - 1, year]
+        link_to 'Upload Reprot', new_admin_report_uploads_path(partner_id: report.partner_id, year: year),
           target: '_blank', class: 'member_link'
       end
     end

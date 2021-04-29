@@ -6,6 +6,10 @@
   <%= simple_form_for(:report_upload, url: report_uploads_path) do |f| %>
     <%= f.hidden_field :admin, value: true %>
 
+    <div class="form-group">
+      <%= f.input :year, as: :radio_buttons, collection: [Date.today.year, Date.today.year - 1], checked: params[:year] || Date.today.year, label: 'Year of report' %>
+    </div>
+
     <div class="row">
       <div class="col-6">
         <div class="form-group">

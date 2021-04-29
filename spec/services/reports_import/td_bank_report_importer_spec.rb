@@ -156,6 +156,30 @@ module ReportsImport
             end
           end
         end
+
+        context 'wrong year' do
+          before { allow(subject).to receive(:data).and_return(input_data) }
+
+          let(:input_data) do
+            [
+              { td_account: dealer.td_account, units: 10, reported_on: "#{year-1}-04-10", market_share_reached: 'true',
+          first_look: 'true' },
+              { td_account: dealer.td_account, units: 17, reported_on: "#{year-1}-04-11", market_share_reached: 'false',
+          first_look: 'false' },
+            ]
+          end
+
+          it "doesn't create new entry" do
+            Entry.delete_all
+            expect { subject.call }.to_not change(Entry, 'count').from(0)
+          end
+
+          it 'records the error information to logs' do
+            subject.call
+            expect(subject.logs).to \
+              all(a_hash_including(success: false, message: /error: the date doesn't match the reporting year/))
+          end
+        end
       end
     end
   end

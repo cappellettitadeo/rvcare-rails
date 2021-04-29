@@ -76,7 +76,7 @@ module ReportsImport
 
           it "updates the sales' values" do
             expect { subject.call }.to \
-              change { Sales.pluck(:value) }.from([8, 8]).to([10, 17])
+              change { Sales.pluck(:value) }.from([8, 8]).to(contain_exactly(10, 17))
           end
 
           it "updates the units' values" do
@@ -194,6 +194,28 @@ module ReportsImport
                   a_hash_including(success: true, message: 'Sales created')
                 )
             end
+          end
+        end
+
+        context 'wrong year' do
+          before { allow(subject).to receive(:data).and_return(input_data) }
+
+          let(:input_data) do
+            [
+              { sal_account: dealer.sal_account, amount: 10, units: 2, reported_on: "#{year-1}-04-10" },
+              { sal_account: dealer.sal_account, amount: 17, units: 3, reported_on: "#{year-1}-04-11" },
+            ]
+          end
+
+          it "doesn't create new entry" do
+            Entry.delete_all
+            expect { subject.call }.to_not change(Entry, 'count').from(0)
+          end
+
+          it 'records the error information to logs' do
+            subject.call
+            expect(subject.logs).to \
+              all(a_hash_including(success: false, message: /error: the date doesn't match the reporting year/))
           end
         end
       end

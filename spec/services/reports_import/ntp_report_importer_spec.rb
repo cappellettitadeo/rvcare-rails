@@ -134,6 +134,28 @@ module ReportsImport
             end
           end
         end
+
+        context 'wrong year' do
+          before { allow(subject).to receive(:data).and_return(input_data) }
+
+          let(:input_data) do
+            [
+              { ntp_account: dealer.ntp_account, amount: 10, reported_on: "#{year-1}-04-10" },
+              { ntp_account: dealer.ntp_account, amount: 17, reported_on: "#{year-1}-04-11" },
+            ]
+          end
+
+          it "doesn't create new entry" do
+            Entry.delete_all
+            expect { subject.call }.to_not change(Entry, 'count').from(0)
+          end
+
+          it 'records the error information to logs' do
+            subject.call
+            expect(subject.logs).to \
+              all(a_hash_including(success: false, message: /error: the date doesn't match the reporting year/))
+          end
+        end
       end
     end
 

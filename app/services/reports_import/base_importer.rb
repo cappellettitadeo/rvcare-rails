@@ -34,9 +34,9 @@ module ReportsImport
 
     def import(data_item)
       custom_id = data_item[dealer_id_key]
-      year = data_item[:reported_on]&.match(/\d{4}/)
+      match_data = data_item[:reported_on]&.match(/\d{4}/)
 
-      if year && year.to_i != @partner_report.year
+      if match_data && match_data[0].to_i != @partner_report.year
         add_logs(false, "error: the date doesn't match the reporting year (#{@partner_report.year})", data_item)
         return
       end

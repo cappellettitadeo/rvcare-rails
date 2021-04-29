@@ -9,7 +9,7 @@ RSpec.describe 'ReportUploads', type: :request do
     let(:ntp_report) { FactoryBot.create(:partner_report, year: year, type: 'NtpReport') }
     let(:file) { fixture_file_upload('correct_ntp_report.csv', 'text/csv') }
 
-    subject { post '/report_uploads', params: { report_upload: { file: file }}}
+    subject { post '/report_uploads', params: { report_upload: { file: file, year: year }}}
 
     context 'unauthorized' do
       it 'requires authentication' do
@@ -52,7 +52,7 @@ RSpec.describe 'ReportUploads', type: :request do
         it 'redirects to root url', :aggregate_failures do
           subject
           expect(response).to redirect_to(root_url)
-          expect(flash[:error]).to include('you need to create a partner report')
+          expect(flash[:error]).to include('you need to have a partner report')
         end
       end
 
@@ -67,6 +67,30 @@ RSpec.describe 'ReportUploads', type: :request do
           expect(flash[:error]).to include('Processing csv file error')
         end
       end
+
+      context "year is not specified" do
+        subject { post '/report_uploads', params: { report_upload: { file: file }}}
+
+        before do
+          user.partner = ntp_report.partner
+          FactoryBot.create :dealer, ntp_account: "110173"
+          FactoryBot.create :dealer, ntp_account: "106469"
+        end
+
+        it "doesn't create Entry records" do
+          expect { subject }.to_not change(Sales, :count).from(0)
+        end
+
+        it "redirects to root_url" do
+          subject
+          expect(response).to redirect_to(root_url)
+        end
+
+        it "outputs an error message" do
+          subject
+          expect(flash[:error]).to include('you need to have a partner report')
+        end
+      end
     end
 
     context 'as admin' do
@@ -76,7 +100,7 @@ RSpec.describe 'ReportUploads', type: :request do
 
       subject do
         post '/report_uploads', params: {
-          report_upload: { admin: 'true', file: file, partner_id: ntp_report.partner_id }
+          report_upload: { admin: 'true', file: file, partner_id: ntp_report.partner_id, year: year }
         }
       end
 
@@ -103,7 +127,7 @@ RSpec.describe 'ReportUploads', type: :request do
         it 'redirects to root url', :aggregate_failures do
           subject
           expect(response).to redirect_to(root_url)
-          expect(flash[:error]).to include('no permissions for reports uploading')
+          expect(flash[:error]).to include('no permissions for this action')
         end
 
         it 'doesnt create new Sales records' do
