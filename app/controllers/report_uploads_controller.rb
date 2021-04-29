@@ -35,8 +35,8 @@ class ReportUploadsController < ApplicationController
   def set_importer
     return if (partner = get_partner).nil?
 
-    if (report = partner.current_report).nil?
-      flash[:error] = "To start data import you need to create a partner report for #{Date.today.year} year"
+    if (report = partner.report_for_year(upload_params[:year])).nil?
+      flash[:error] = "To start data import you need to have a partner report for #{upload_params[:year]} year"
       return
     end
 

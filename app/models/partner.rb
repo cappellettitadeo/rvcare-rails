@@ -6,6 +6,10 @@ class Partner < ApplicationRecord
   resourcify
 
   def current_report
-    partner_reports.find_by(year: Date.today.year)
+    report_for_year(Date.today.year)
+  end
+
+  def report_for_year(year)
+    partner_reports.find_by(year: year)
   end
 end

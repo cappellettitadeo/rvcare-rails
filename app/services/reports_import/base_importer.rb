@@ -34,6 +34,12 @@ module ReportsImport
 
     def import(data_item)
       custom_id = data_item[dealer_id_key]
+      year = data_item[:reported_on]&.match(/\d{4}/)
+
+      if year && year.to_i != @partner_report.year
+        add_logs(false, "error: the date doesn't match the reporting year (#{@partner_report.year})", data_item)
+        return
+      end
 
       unless custom_id && (dealer = Dealer.find_by(dealer_id_key => custom_id))
         add_logs(false, "error: dealer not found", data_item)
