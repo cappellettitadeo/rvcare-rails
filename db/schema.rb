@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_27_210059) do
+ActiveRecord::Schema.define(version: 2021_04_30_144910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -29,6 +29,30 @@ ActiveRecord::Schema.define(version: 2021_04_27_210059) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
+
+  create_table "dealer_reports", force: :cascade do |t|
+    t.bigint "dealer_id", null: false
+    t.integer "new_units_volume_cents", default: 0, null: false
+    t.integer "new_units"
+    t.integer "used_units_volume_cents", default: 0, null: false
+    t.integer "used_units"
+    t.integer "service_volume_cents", default: 0, null: false
+    t.integer "parts_volume_cents", default: 0, null: false
+    t.integer "retail_finance_contracts"
+    t.integer "creditor_volume_cents", default: 0, null: false
+    t.integer "warranty_volume_cents", default: 0, null: false
+    t.integer "other_volume_cents", default: 0, null: false
+    t.integer "batteries_purchases"
+    t.integer "ntp_purchases"
+    t.integer "dometic_purchases"
+    t.integer "atlas_purchases"
+    t.integer "thiebert_purchases"
+    t.integer "lippert_purchases"
+    t.integer "other_purchases"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dealer_id"], name: "index_dealer_reports_on_dealer_id"
   end
 
   create_table "dealers", force: :cascade do |t|
@@ -190,6 +214,7 @@ ActiveRecord::Schema.define(version: 2021_04_27_210059) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "dealer_reports", "dealers"
   add_foreign_key "entries", "dealers"
   add_foreign_key "entries", "partner_reports"
   add_foreign_key "partner_reports", "partners"
