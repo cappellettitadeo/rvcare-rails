@@ -3,15 +3,18 @@ class DealerReportsController < ApplicationController
   before_action :set_report, only: [:edit, :update, :destroy]
 
   def index
+    authorize @dealer, :show?
     @reports = @dealer.dealer_reports.order(reported_on: :desc)
   end
 
   def new
     @report = @dealer.dealer_reports.new(reported_on: Date.today)
+    authorize @report
   end
 
   def create
     @report = @dealer.dealer_reports.build(report_params)
+    authorize @report
 
     if @report.save
       flash[:success] = "Report successfully created"
@@ -22,9 +25,12 @@ class DealerReportsController < ApplicationController
   end
 
   def edit
+    authorize @report
   end
 
   def update
+    authorize @report
+
     if @report.update(report_params)
       flash[:success] = "Report successfully updated"
       redirect_to dealer_reports_url(@dealer)
@@ -34,6 +40,8 @@ class DealerReportsController < ApplicationController
   end
 
   def destroy
+    authorize @report
+
     @report.destroy!
     flash[:success] = "Report successfully deleted"
     redirect_to dealer_reports_url(@dealer)

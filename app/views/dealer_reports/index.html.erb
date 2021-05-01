@@ -1,14 +1,16 @@
 <h1>Dealer Reports</h1>
 
-<div class="float-right">
-  <%= link_to new_dealer_report_path do %>
-    <h4>
-      <span class="badge badge-success">
-        Create new report
-      </span>
-    </h4>
-  <% end %>
-</div>
+<% if policy(@dealer.dealer_reports.new).new? %>
+  <div class="float-right">
+    <%= link_to new_dealer_report_path do %>
+      <h4>
+        <span class="badge badge-success">
+          Create new report
+        </span>
+      </h4>
+    <% end %>
+  </div>
+<% end %>
 
 <table class='table table-bordered'>
   <thead>
@@ -58,8 +60,8 @@
         <td><%= report.lippert_purchases %></td>
         <td><%= report.other_purchases %></td>
         <td>
-          <%= link_to 'edit', edit_dealer_report_path(@dealer, report), target: '_blank' %> |
-          <%= link_to 'delete', dealer_report_path(@dealer, report), method: :delete, data: { confirm: "Are you sure?" } %>
+          <%= link_to 'edit', edit_dealer_report_path(@dealer, report), target: '_blank' if policy(report).update? %>
+          <%= link_to 'delete', dealer_report_path(@dealer, report), method: :delete, data: { confirm: "Are you sure?" } if policy(report).destroy? %>
         </td>
       </tr>
     <% end %>
