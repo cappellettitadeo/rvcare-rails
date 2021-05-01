@@ -13,7 +13,11 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resource :dashboard, only: %i[show update]
   resources :widgets, only: [:show]
-  resources :dealers, only: %i[edit update]
+  resources :dealers, only: %i[edit update] do
+    resources :reports, controller: :dealer_reports
+  end
+
+
   resources :report_uploads, only: [:new, :create] do
     collection do
       get 'new_admin'
