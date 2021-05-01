@@ -4,4 +4,5 @@ class Dealer < ApplicationRecord
   resourcify
 
   has_many :staffs
+  has_many :dealer_reports
 end

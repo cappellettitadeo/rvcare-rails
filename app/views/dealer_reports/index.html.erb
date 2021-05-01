@@ -1,0 +1,56 @@
+<h1>Dealer Reports</h1>
+
+<table class='table table-bordered'>
+  <thead>
+    <tr>
+      <th rowspan="2">Reported On</th>
+      <th colspan="10">Annual Retail Sales</th>
+      <th colspan="7">Annual Purchases</th>
+      <th rowspan="2">Actions</th>
+    </tr>
+    <tr>
+      <th colspan='2'>New Units</th>
+      <th colspan='2'>Used Units</th>
+      <th>Service</th>
+      <th>Parts & Accessories</th>
+      <th>Retail Finance</th>
+      <th>Creditor</th>
+      <th>Warranty</th>
+      <th>Other</th>
+      <th>Battaries</th>
+      <th>NTP</th>
+      <th>Dometic</th>
+      <th>Atlas</th>
+      <th>Thiebert</th>
+      <th>Lippert</th>
+      <th>Other</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= report.reported_on.strftime('%Y, %B %d') %></td>
+        <td><%= report.new_units %></td>
+        <td>$<%= report.new_units_volume %></td>
+        <td><%= report.used_units %></td>
+        <td>$<%= report.used_units_volume %></td>
+        <td>$<%= report.service_volume %></td>
+        <td>$<%= report.parts_volume %></td>
+        <td><%= report.retail_finance_contracts %></td>
+        <td>$<%= report.creditor_volume %></td>
+        <td>$<%= report.warranty_volume %></td>
+        <td>$<%= report.other_volume %></td>
+        <td><%= report.batteries_purchases %></td>
+        <td><%= report.ntp_purchases %></td>
+        <td><%= report.dometic_purchases %></td>
+        <td><%= report.atlas_purchases %></td>
+        <td><%= report.thiebert_purchases %></td>
+        <td><%= report.lippert_purchases %></td>
+        <td><%= report.other_purchases %></td>
+        <td>
+          show | edit | delete
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
