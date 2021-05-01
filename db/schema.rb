@@ -34,22 +34,23 @@ ActiveRecord::Schema.define(version: 2021_04_30_144910) do
   create_table "dealer_reports", force: :cascade do |t|
     t.bigint "dealer_id", null: false
     t.integer "new_units_volume_cents", default: 0, null: false
-    t.integer "new_units"
+    t.integer "new_units", default: 0
     t.integer "used_units_volume_cents", default: 0, null: false
-    t.integer "used_units"
+    t.integer "used_units", default: 0
     t.integer "service_volume_cents", default: 0, null: false
     t.integer "parts_volume_cents", default: 0, null: false
-    t.integer "retail_finance_contracts"
+    t.integer "retail_finance_contracts", default: 0
     t.integer "creditor_volume_cents", default: 0, null: false
     t.integer "warranty_volume_cents", default: 0, null: false
     t.integer "other_volume_cents", default: 0, null: false
-    t.integer "batteries_purchases"
-    t.integer "ntp_purchases"
-    t.integer "dometic_purchases"
-    t.integer "atlas_purchases"
-    t.integer "thiebert_purchases"
-    t.integer "lippert_purchases"
-    t.integer "other_purchases"
+    t.integer "batteries_purchases", default: 0
+    t.integer "ntp_purchases", default: 0
+    t.integer "dometic_purchases", default: 0
+    t.integer "atlas_purchases", default: 0
+    t.integer "thiebert_purchases", default: 0
+    t.integer "lippert_purchases", default: 0
+    t.integer "other_purchases", default: 0
+    t.date "reported_on", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dealer_id"], name: "index_dealer_reports_on_dealer_id"
