@@ -3,7 +3,7 @@
 <div class="float-right">
   <%= link_to new_dealer_report_path do %>
     <h4>
-      <span class="badge badge-dark">
+      <span class="badge badge-success">
         Create new report
       </span>
     </h4>
@@ -58,7 +58,8 @@
         <td><%= report.lippert_purchases %></td>
         <td><%= report.other_purchases %></td>
         <td>
-          show | edit | delete
+          <%= link_to 'edit', edit_dealer_report_path(@dealer, report), target: '_blank' %> |
+          <%= link_to 'delete', dealer_report_path(@dealer, report), method: :delete, data: { confirm: "Are you sure?" } %>
         </td>
       </tr>
     <% end %>

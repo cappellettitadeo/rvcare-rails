@@ -1,27 +1,42 @@
 class DealerReportsController < ApplicationController
-  before_action :set_dealer, only: [:index, :new, :create]
-  before_action :set_report, only: [:edit, :update]
+  before_action :set_dealer
+  before_action :set_report, only: [:edit, :update, :destroy]
 
   def index
     @reports = @dealer.dealer_reports.order(reported_on: :desc)
   end
 
   def new
-    @report = @dealer.dealer_reports.new
+    @report = @dealer.dealer_reports.new(reported_on: Date.today)
   end
 
   def create
     @report = @dealer.dealer_reports.build(report_params)
 
     if @report.save
-      flash[:success] = "New report created"
-      redirect_to dealer_reports_url
+      flash[:success] = "Report successfully created"
+      redirect_to dealer_reports_url(@dealer)
     else
       render :new
     end
   end
 
   def edit
+  end
+
+  def update
+    if @report.update(report_params)
+      flash[:success] = "Report successfully updated"
+      redirect_to dealer_reports_url(@dealer)
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @report.destroy!
+    flash[:success] = "Report successfully deleted"
+    redirect_to dealer_reports_url(@dealer)
   end
 
   private

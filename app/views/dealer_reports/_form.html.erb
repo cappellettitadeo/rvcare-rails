@@ -1,4 +1,15 @@
-<%= simple_form_for(dealer_report) do |f| %>
+<%= simple_form_for(@report, url: url) do |f| %>
+  <% if @report.errors.any? %>
+    <div class="alert alert-danger">
+      <h3><%= pluralize(@report.errors.count, "error") %> prohibited this report from being saved:</h3>
+
+      <ul>
+        <% @report.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="row">
     <div class="col-12">
       <div class="card">
@@ -7,7 +18,7 @@
             <div class="col-3">
               <div class="form-group">
                 <%= f.label :reported_on %>
-                <%= f.date_field :reported_on, value: Date.today, class: 'form-control' %>
+                <%= f.date_field :reported_on, class: 'form-control' %>
               </div>
             </div>
           </div>
