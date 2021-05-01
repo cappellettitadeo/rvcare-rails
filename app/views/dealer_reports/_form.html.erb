@@ -1,0 +1,136 @@
+<%= simple_form_for(dealer_report) do |f| %>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.label :reported_on %>
+                <%= f.date_field :reported_on, value: Date.today, class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Annual Retail Sales</h3>
+          <div class="row">
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :new_units_volume, as: :decimal, label: 'New Units Volume, $' %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :new_units %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :used_units_volume, as: :decimal, label: 'Used Units Volume, $' %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :used_units %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :service_volume, as: :decimal, label: 'Service Volume, $' %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :parts_volume, as: :decimal, label: 'Parts & Accessories, $' %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :retail_finance_contracts %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :creditor_volume, as: :decimal, label: 'Creditor Volume, $' %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :warranty_volume, as: :decimal, label: 'Warranty Volume, $' %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :other_volume, as: :decimal, label: 'Other Business Products, $' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Annual Purchases - Parts & Accessories</h3>
+          <div class="row">
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :batteries_purchases, label: 'Battaries' %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :ntp_purchases, label: 'NTP' %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :dometic_purchases, label: 'Dometic' %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :atlas_purchases, label: 'Atlas' %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :thiebert_purchases, label: 'Thiebert' %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :lippert_purchases, label: 'Lippert' %>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <%= f.input :other_purchases, label: 'Other' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
