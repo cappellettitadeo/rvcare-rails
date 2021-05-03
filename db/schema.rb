@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_30_144910) do
+ActiveRecord::Schema.define(version: 2021_05_03_130158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -33,16 +33,16 @@ ActiveRecord::Schema.define(version: 2021_04_30_144910) do
 
   create_table "dealer_reports", force: :cascade do |t|
     t.bigint "dealer_id", null: false
-    t.integer "new_units_volume_cents", default: 0, null: false
+    t.integer "new_units_volume", default: 0, null: false
     t.integer "new_units", default: 0
-    t.integer "used_units_volume_cents", default: 0, null: false
+    t.integer "used_units_volume", default: 0, null: false
     t.integer "used_units", default: 0
-    t.integer "service_volume_cents", default: 0, null: false
-    t.integer "parts_volume_cents", default: 0, null: false
+    t.integer "service_volume", default: 0, null: false
+    t.integer "parts_volume", default: 0, null: false
     t.integer "retail_finance_contracts", default: 0
-    t.integer "creditor_volume_cents", default: 0, null: false
-    t.integer "warranty_volume_cents", default: 0, null: false
-    t.integer "other_volume_cents", default: 0, null: false
+    t.integer "creditor_volume", default: 0, null: false
+    t.integer "warranty_volume", default: 0, null: false
+    t.integer "other_volume", default: 0, null: false
     t.integer "batteries_purchases", default: 0
     t.integer "ntp_purchases", default: 0
     t.integer "dometic_purchases", default: 0
