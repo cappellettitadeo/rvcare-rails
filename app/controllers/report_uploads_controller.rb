@@ -9,10 +9,9 @@ class ReportUploadsController < ApplicationController
 
   def new_admin
     return redirect_to root_url unless is_admin?
-
-    @partners_select = PartnerReport
-      .includes(:partner)
-      .where(year: Date.today.year)
+    year = Date.today.year
+    @reports = PartnerReport.includes(:partner).where(year: [year - 1, year])
+    @partners_select = @reports
       .map(&:partner)
       .compact
       .map { |pr| [pr.name, pr.id] }

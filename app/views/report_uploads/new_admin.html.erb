@@ -1,7 +1,21 @@
+<%= javascript_pack_tag "admin_upload_reports" %>
+
 <div class="container-fluid">
   <h1>Upload report as admin</h1>
 
-  <%= render partial: 'example', locals: { type: @report_type } if @report_type %>
+  <div class="mt-4 mb-4">
+    <% @reports.each do |report| %>
+      <%= report_data_storage(report) %>
+    <% end %>
+
+    <h3>Report example</h3>
+    <p id='quick-report'></p>
+    <div class="p-3 mb-2 bg-light text-dark">
+      <samp>
+
+      </samp>
+    </div>
+  </div>
 
   <%= simple_form_for(:report_upload, url: report_uploads_path) do |f| %>
     <%= f.hidden_field :admin, value: true %>
