@@ -1,46 +1,9 @@
 <div class="mt-4 mb-4">
   <h3>Report example</h3>
-  <p>Here you can see the example of the correct format of the <%= type %> csv file:</p>
+  <p>Here you can see the example of the correct format of the <%= report.type %> csv file:</p>
   <div class="p-3 mb-2 bg-light text-dark">
     <samp>
-      <% case type %>
-      <% when 'NtpReport' %>
-        ntp_account, amount, reported_on<br>
-        110173, 6, 2021-04-10<br>
-        106469, 9, 2021-04-10<br>
-        114456, 7, 2021-04-10
-      <% when 'SalCreditorReport' %>
-        sal_account, amount, units, reported_on<br>
-        QC000158, 6, 2, 2021-04-10<br>
-        QC007018, 9, 3, 2021-04-10<br>
-        ON000196, 7, 1, 2021-04-10
-      <% when 'SalOtherReport', 'SalWarrantyReport' %>
-        sal_account, units, reported_on<br>
-        QC000158, 2, 2021-04-10<br>
-        QC007018, 3, 2021-04-10<br>
-        ON000196, 1, 2021-04-10
-      <% when 'SimpleSalesReport', 'EastPennReport' %>
-        <%= current_user.partner.custom_dealer_id || 'sal_account' %>,
-        amount, reported_on<br>
-        QC000158, 55, 2021-04-10<br>
-        QC007018, 56, 2021-04-10
-      <% when 'SimpleUnitsReport' %>
-        <%= current_user.partner.custom_dealer_id || 'sal_account' %>,
-        units, reported_on<br>
-        QC000158, 55, 2021-04-10<br>
-        QC007018, 56, 2021-04-10
-      <% when 'TdBankReport' %>
-        td_account, units, reported_on, market_share_reached, first_look<br>
-        123456, 55, 2021-04-10, false, true<br>
-        789012, 56, 2021-04-10, true, false
-      <% when 'WellsFargoReport' %>
-        <%= current_user.partner.custom_dealer_id || 'wells_fargo_account' %>,
-        amount, reported_on<br>
-        102971, 55, 2021-04-10<br>
-        199818, 56, 2021-04-10<br>
-        212676, 100, 2021-04-10<br>
-        102971, 1, 2021-04-12
-      <% end%>
+      <%= report.example.join('<br>').html_safe %>
     </samp>
   </div>
 </div>

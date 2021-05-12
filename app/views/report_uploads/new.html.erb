@@ -1,6 +1,6 @@
 <h1>Upload report</h1>
 
-<%= render partial: 'example', locals: { type: @report_type } if @report_type %>
+<%= render partial: 'example', locals: { report: @report } %>
 
 <%= simple_form_for(:report_upload, url: report_uploads_path) do |f| %>
 

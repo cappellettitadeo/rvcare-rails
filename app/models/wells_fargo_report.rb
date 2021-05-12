@@ -29,6 +29,16 @@ class WellsFargoReport < PartnerReport
     ReportsImport::WellsFargoReportImporter.new(partner_report: self, file: file)
   end
 
+  def example
+    @@example ||= [
+      'wells_fargo_account, amount, reported_on',
+      '102971, 55, 2021-04-10',
+      '199818, 56, 2021-04-10',
+      '212676, 100, 2021-04-10',
+      '102971, 1, 2021-04-12'
+    ].freeze
+  end
+
   private
 
   def calculate_return_amount(scoped_sales:, **)

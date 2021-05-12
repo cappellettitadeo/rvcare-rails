@@ -32,6 +32,15 @@ class SalCreditorReport < SalReport
     ReportsImport::SalCreditorReportImporter.new(partner_report: self, file: file)
   end
 
+  def example
+    @@example ||= [
+      'sal_account, amount, units, reported_on',
+      'QC000158, 6, 2, 2021-04-10',
+      'QC007018, 9, 3, 2021-04-10',
+      'ON000196, 7, 1, 2021-04-10'
+    ].freeze
+  end
+
   private
 
   def calculate_return_amount(scoped_units:, **)

@@ -17,6 +17,15 @@ class NtpReport < PartnerReport
     ReportsImport::NtpReportImporter.new(partner_report: self, file: file)
   end
 
+  def example
+    @@example ||= [
+      'ntp_account, amount, reported_on',
+      '110173, 6, 2021-04-10',
+      '106469, 9, 2021-04-10',
+      '114456, 7, 2021-04-10'
+    ].freeze
+  end
+
   private
 
   def calculate_return_amount(**)

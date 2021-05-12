@@ -21,6 +21,14 @@ class TdBankReport < PartnerReport
     ReportsImport::TdBankReportImporter.new(partner_report: self, file: file)
   end
 
+  def example
+    @@example ||= [
+      'td_account, units, reported_on, market_share_reached, first_look',
+      '123456, 55, 2021-04-10, false, true',
+      '789012, 56, 2021-04-10, true, false'
+    ].freeze
+  end
+
   private
 
   def calculate_return_amount(scoped_units:, **)
