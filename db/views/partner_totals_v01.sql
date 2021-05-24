@@ -1,0 +1,1 @@
+select partners.name, partner_reports.type, partner_reports.year, partner_reports.total_units, partner_reports.total_sales, partner_reports.total_return_amount, partner_reports.total_rvcare_share, partner_reports.total_dealer_share from partner_reports inner join partners on partners.id = partner_reports.partner_id

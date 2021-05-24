@@ -38,6 +38,7 @@ gem 'acts-as-taggable-on', '~> 7.0'
 gem 'humanize'
 gem 'ledermann-rails-settings'
 gem 'liquid'
+gem 'scenic'
 gem 'simple_form'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

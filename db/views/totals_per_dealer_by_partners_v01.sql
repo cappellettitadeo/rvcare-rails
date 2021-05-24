@@ -1,0 +1,1 @@
+select dealers.company as dealer, partners.name as partner, partner_reports.type, partner_reports.year, results.units, results.sales, results.amount from results inner join dealers on dealers.id = results.dealer_id inner join partner_reports on partner_reports.id = results.partner_report_id inner join partners on partners.id = partner_reports.partner_id

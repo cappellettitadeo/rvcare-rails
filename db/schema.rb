@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_03_130158) do
+ActiveRecord::Schema.define(version: 2021_05_25_011111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -252,4 +252,30 @@ ActiveRecord::Schema.define(version: 2021_05_03_130158) do
   add_foreign_key "results", "partner_reports"
   add_foreign_key "staffs", "dealers"
   add_foreign_key "taggings", "tags"
+
+  create_view "totals_per_dealer_by_partners", sql_definition: <<-SQL
+      SELECT dealers.company AS dealer,
+      partners.name AS partner,
+      partner_reports.type,
+      partner_reports.year,
+      results.units,
+      results.sales,
+      results.amount
+     FROM (((results
+       JOIN dealers ON ((dealers.id = results.dealer_id)))
+       JOIN partner_reports ON ((partner_reports.id = results.partner_report_id)))
+       JOIN partners ON ((partners.id = partner_reports.partner_id)));
+  SQL
+  create_view "partner_totals", sql_definition: <<-SQL
+      SELECT partners.name,
+      partner_reports.type,
+      partner_reports.year,
+      partner_reports.total_units,
+      partner_reports.total_sales,
+      partner_reports.total_return_amount,
+      partner_reports.total_rvcare_share,
+      partner_reports.total_dealer_share
+     FROM (partner_reports
+       JOIN partners ON ((partners.id = partner_reports.partner_id)));
+  SQL
 end
