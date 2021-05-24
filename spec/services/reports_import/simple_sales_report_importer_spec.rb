@@ -11,10 +11,10 @@ module ReportsImport
     end
 
     describe '#call' do
+      subject { described_class.new(file: fake_file, partner_report: partner_report) }
+
       let(:dealer) { FactoryBot.create(:dealer, sal_account: 6.times.map { rand(10).to_s }.join) }
       let(:fake_file) { instance_double('ActionDispatch::Http::UploadedFile', original_filename: 'fake file') }
-
-      subject { described_class.new(file: fake_file, partner_report: partner_report) }
 
       context 'valid input data' do
         before { allow(subject).to receive(:data).and_return(input_data) }
@@ -22,7 +22,7 @@ module ReportsImport
         let(:input_data) do
           [
             { sal_account: dealer.sal_account, amount: 10, reported_on: "#{year}-04-10" },
-            { sal_account: dealer.sal_account, amount: 17, reported_on: "#{year}-04-11" },
+            { sal_account: dealer.sal_account, amount: 17, reported_on: "#{year}-04-11" }
           ]
         end
 
@@ -34,10 +34,10 @@ module ReportsImport
           subject.call
           entries = Entry.last(2)
 
-          expect(entries.map(&:type)).to all(eq("Sales"))
+          expect(entries.map(&:type)).to all(eq('Sales'))
           expect(entries.map(&:partner_report_id)).to all(eq(partner_report.id))
           expect(entries.map(&:dealer_id)).to all(eq(dealer.id))
-          expect(entries.map(&:reported_on)).to contain_exactly(Date.parse("2021-04-10"), Date.parse("2021-04-11"))
+          expect(entries.map(&:reported_on)).to contain_exactly(Date.parse('2021-04-10'), Date.parse('2021-04-11'))
           expect(entries.map(&:value)).to contain_exactly(10, 17)
         end
 
@@ -45,7 +45,7 @@ module ReportsImport
           let(:input_data) do
             [
               { sal_account: dealer.sal_account, amount: 10, reported_on: "#{year}-04-10" },
-              { sal_account: dealer.sal_account, amount: 17, reported_on: "#{year}-04-11" },
+              { sal_account: dealer.sal_account, amount: 17, reported_on: "#{year}-04-11" }
             ]
           end
 
@@ -63,10 +63,10 @@ module ReportsImport
           end
 
           it "doesn't create new entries" do
-            expect { subject.call }.to_not change(Sales, :count)
+            expect { subject.call }.not_to change(Sales, :count)
           end
 
-          it "updates the values" do
+          it 'updates the values' do
             expect { subject.call }.to \
               change { Sales.pluck(:value) }.from([8, 8]).to([10, 17])
           end
@@ -75,7 +75,7 @@ module ReportsImport
 
       context 'wrong input data' do
         context 'worng file format' do
-          let(:input_data) { "fake input data" }
+          let(:input_data) { 'fake input data' }
 
           before do
             allow(SmarterCSV).to receive(:process).and_raise('Wrong file format')
@@ -101,17 +101,17 @@ module ReportsImport
 
           it "doesn't create new entry" do
             Entry.delete_all
-            expect { subject.call }.to_not change(Entry, 'count').from(0)
+            expect { subject.call }.not_to change(Entry, 'count').from(0)
           end
 
           it 'records the error information to logs' do
             subject.call
             expect(subject.logs).to \
-              contain_exactly(a_hash_including(success: false, message: "error: dealer not found"))
+              contain_exactly(a_hash_including(success: false, message: 'error: dealer not found'))
           end
         end
 
-        [:amount, :reported_on].each do |absent_field|
+        %i[amount reported_on].each do |absent_field|
           context "#{absent_field} absence" do
             before do
               input_data.first[absent_field] = nil
@@ -124,7 +124,7 @@ module ReportsImport
             end
 
             it "doesn't create new entry" do
-              expect { subject.call }.to_not change(Entry, 'count').from(0)
+              expect { subject.call }.not_to change(Entry, 'count').from(0)
             end
 
             it 'records the error information to logs' do
@@ -140,14 +140,14 @@ module ReportsImport
 
           let(:input_data) do
             [
-              { sal_account: dealer.sal_account, amount: 10, reported_on: "#{year-1}-04-10" },
-              { sal_account: dealer.sal_account, amount: 17, reported_on: "#{year-1}-04-11" },
+              { sal_account: dealer.sal_account, amount: 10, reported_on: "#{year - 1}-04-10" },
+              { sal_account: dealer.sal_account, amount: 17, reported_on: "#{year - 1}-04-11" }
             ]
           end
 
           it "doesn't create new entry" do
             Entry.delete_all
-            expect { subject.call }.to_not change(Entry, 'count').from(0)
+            expect { subject.call }.not_to change(Entry, 'count').from(0)
           end
 
           it 'records the error information to logs' do
@@ -158,6 +158,5 @@ module ReportsImport
         end
       end
     end
-
   end
 end

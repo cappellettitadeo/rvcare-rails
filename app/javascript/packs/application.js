@@ -9,7 +9,6 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-import "bootstrap"
 import '@coreui/coreui/dist/js/coreui'
 import '@fortawesome/fontawesome-free/js/all'
 

@@ -2,8 +2,9 @@
   "name": "rvcare",
   "private": true,
   "dependencies": {
-    "@coreui/coreui": "^2.1.2",
-    "@coreui/icons": "^1.0.1",
+    "@coreui/coreui": "^3.4.0",
+    "@coreui/icons": "^2.0.0-rc.0",
+    "@popperjs/core": "^2.9.0",
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",

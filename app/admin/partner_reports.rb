@@ -31,7 +31,7 @@ ActiveAdmin.register PartnerReport do
       year = Date.today.year
       if report.year.in? [year - 1, year]
         link_to 'Upload Reprot', new_admin_report_uploads_path(partner_id: report.partner_id, year: year),
-          target: '_blank', class: 'member_link'
+                target: '_blank', class: 'member_link', rel: 'noopener'
       end
     end
   end

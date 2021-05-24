@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Widget < ApplicationRecord
+  acts_as_taggable_on :categories
   has_and_belongs_to_many :users
 
   validates :name, presence: true

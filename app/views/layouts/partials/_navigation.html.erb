@@ -1,29 +1,43 @@
-<nav class='sidebar-nav'>
-  <ul class='nav'>
-    <li class='nav-item'>
-      <%= render 'layouts/partials/dashboard_nav' %>
-    </li>
-
-    <li class='nav-item'>
-      <%= link_to admin_root_path, class: 'nav-link' do %>
-        <i class='nav-icon cil-lock-locked'></i>
-        <%= t(:admin) %>
+<div id="sidebar" class='c-sidebar c-sidebar-light'>
+  <ul class='c-sidebar-nav'>
+    <li class="c-sidebar-nav-title"><%= t(:management) %></li>
+    <li class="c-sidebar-nav-item">
+      <%= link_to fullscreen_dashboard_show_path, class: 'c-sidebar-nav-link' do %>
+        <i class='c-sidebar-nav-icon cil-speedometer'></i>
+        <%= t(:dashboard) %>
       <% end %>
-
     </li>
+    <% if current_user.partner&.current_report %>
+      <li class='c-sidebar-nav-item'>
+        <%= link_to new_report_upload_path, class: 'c-sidebar-nav-link' do %>
+          <i class='c-sidebar-nav-icon cil-spreadsheet'></i>
+          <%= t(:upload_report) %>
+        <% end %>
+      </li>
+    <% end %>
 
-    <li class='nav-item'>
-      <%= link_to edit_user_password_path, class: "nav-link disabled" do %>
-        <i class="nav-icon cil-user"></i>
+    <li class='c-sidebar-nav-item mt-auto'>
+      <a href="#" class="c-sidebar-nav-link">
+        <i class="c-sidebar-nav-icon cil-user"></i>
         <%= t(:profile) %>
-      <% end %>
+      </a>
     </li>
 
-    <li class='nav-item'>
-      <%= link_to destroy_user_session_path, :method => :delete, class: "nav-link" do %>
-        <i class="nav-icon cil-power-standby"></i>
+    <% if current_user.has_role?(:admin) %>
+      <li class='c-sidebar-nav-item'>
+        <%= link_to admin_root_path, class: 'c-sidebar-nav-link' do %>
+          <i class='c-sidebar-nav-icon cil-lock-locked'></i>
+          <%= t(:admin) %>
+        <% end %>
+      </li>
+    <% end %>
+
+    <li class='c-sidebar-nav-item'>
+      <%= link_to destroy_user_session_path, :method => :delete, class: "c-sidebar-nav-link" do %>
+        <i class="c-sidebar-nav-icon cil-power-standby"></i>
         <%= t(:logout) %>
       <% end %>
     </li>
+
   </ul>
-</nav>
+</div>

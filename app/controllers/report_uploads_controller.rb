@@ -9,13 +9,14 @@ class ReportUploadsController < ApplicationController
 
   def new_admin
     return redirect_to root_url unless is_admin?
+
     year = Date.today.year
     @reports = PartnerReport.includes(:partner).where(year: [year - 1, year])
     @partners_select = @reports
-      .map(&:partner)
-      .compact
-      .map { |pr| [pr.name, pr.id] }
-      .sort_by(&:first)
+                       .map(&:partner)
+                       .compact
+                       .map { |pr| [pr.name, pr.id] }
+                       .sort_by(&:first)
   end
 
   def create
@@ -45,6 +46,7 @@ class ReportUploadsController < ApplicationController
   def get_partner
     if upload_params[:admin] == 'true'
       return unless is_admin?
+
       partner = Partner.find(upload_params[:partner_id])
     elsif (partner = current_user.partner).nil?
       flash[:error] = 'You have no permissions for reports uploading'
@@ -55,6 +57,7 @@ class ReportUploadsController < ApplicationController
 
   def is_admin?
     return true if current_user.admin
+
     flash[:error] = 'You have no permissions for this action'
     false
   end

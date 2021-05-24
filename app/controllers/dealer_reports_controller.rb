@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class DealerReportsController < ApplicationController
   before_action :set_dealer
-  before_action :set_report, only: [:edit, :update, :destroy]
+  before_action :set_report, only: %i[edit update destroy]
 
   def index
     authorize @dealer, :show?
@@ -17,7 +19,7 @@ class DealerReportsController < ApplicationController
     authorize @report
 
     if @report.save
-      flash[:success] = "Report successfully created"
+      flash[:success] = 'Report successfully created'
       redirect_to dealer_reports_url(@dealer)
     else
       render :new
@@ -32,7 +34,7 @@ class DealerReportsController < ApplicationController
     authorize @report
 
     if @report.update(report_params)
-      flash[:success] = "Report successfully updated"
+      flash[:success] = 'Report successfully updated'
       redirect_to dealer_reports_url(@dealer)
     else
       render :edit
@@ -43,7 +45,7 @@ class DealerReportsController < ApplicationController
     authorize @report
 
     @report.destroy!
-    flash[:success] = "Report successfully deleted"
+    flash[:success] = 'Report successfully deleted'
     redirect_to dealer_reports_url(@dealer)
   end
 

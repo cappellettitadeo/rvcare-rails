@@ -1,0 +1,17 @@
+<% unless params[:nav] == 'hide' %>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="navbar-nav">
+      <% @fullscreen_widgets.each do |widget| %>
+        <li class="nav-item <%= @dashboard_url == widget.chart_url ? 'active' : ''  %>">
+          <%= link_to fullscreen_dashboard_show_path(url: widget.chart_url, categories: params['categories']), class: 'nav-link' do %>
+            <i class='nav-icon <%= widget.icon %>'></i>
+            <%= widget.name %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>
+<div class="d-flex flex-grow-1 h-100">
+  <iframe src="<%= @dashboard_url %>" title="dashboard" style="position:absolute;" height="82%" width="95%"/>
+</div>

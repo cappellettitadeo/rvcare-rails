@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDealerReports < ActiveRecord::Migration[6.1]
   def change
     create_table :dealer_reports do |t|

@@ -1,4 +1,14 @@
-<%= link_to dashboard_path, class: 'nav-link' do %>
-  <i class='nav-icon cil-speedometer'></i>
-  <%= t(:dashboard) %>
+<li class="c-header-nav-item px-3">
+  <%= link_to dashboard_path, class: 'c-header-nav-link' do %>
+    <i class='nav-icon cil-speedometer'></i>
+    <%= t(:dashboard) %>
+  <% end %>
+</li>
+<% @fullscreen_widgets.each do |widget| %>
+  <li class="c-header-nav-item px-3">
+    <%= link_to fullscreen_dashboard_show_path(url: widget.chart_url), class: 'c-header-nav-link' do %>
+      <i class='nav-icon <%= widget.icon %>'></i>
+      <%= widget.name %>
+    <% end %>
+  </li>
 <% end %>

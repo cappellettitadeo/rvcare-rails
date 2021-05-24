@@ -17,12 +17,13 @@ Rails.application.routes.draw do
     resources :reports, controller: :dealer_reports
   end
 
-
-  resources :report_uploads, only: [:new, :create] do
+  resources :report_uploads, only: %i[new create] do
     collection do
       get 'new_admin'
     end
   end
 
-  root 'dashboards#show'
+  get 'fullscreen_dashboard/show'
+
+  root 'fullscreen_dashboard#show'
 end

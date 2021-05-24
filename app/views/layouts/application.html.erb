@@ -1,62 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>RV Care</title>
-  <%= render 'layouts/partials/head' %>
-  <%= yield :head %>
-</head>
-<body class="app">
-<header class="app-header navbar">
-  <div class="d-flex flex-row">
-    <button class="navbar-toggler sidebar-toggler" type="button" data-toggle="sidebar-lg-show">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="nav navbar-nav">
-      <li class="nav-item px-3">
-        <%= render "layouts/partials/dashboard_nav" %>
-      </li>
-
-      <% if current_user.partner&.current_report %>
-        <li class='nav-item px-3'>
-          <%= link_to new_report_upload_path, class: 'nav-link' do %>
-            <%= t(:upload_report) %>
-          <% end %>
-        </li>
-      <% end %>
-
-      <%= yield :nav_extra %>
-    </ul>
-  </div>
-  <div class="d-flex flex-row">
-    <%= yield :nav_bar %>
-  </div>
-  <%= link_to dashboard_path, class: "navbar-brand" do %>
-    <% image_tag 'logo-header.png', width: 53, height: 53 %>
-  <% end %>
-</header>
-<div class="app-body">
-  <div class="sidebar">
+  <head>
+    <title>RV Care</title>
+    <%= render 'layouts/partials/head' %>
+    <%= yield :head %>
+  </head>
+  <body class="c-app">
     <%= render "layouts/partials/navigation" %>
-  </div>
-  <main class="main">
-    <%= yield :top_menu %>
-    <div class="flash_messages">
-      <%= render partial: "layouts/partials/flashes", locals: { flash: flash } %>
+    <div class="c-wrapper">
+      <header class="c-header site-header">
+        <nav class="navbar navbar-light" role="navigation">
+          <button class="c-header-toggler c-class-toggler" type="button" data-target="#sidebar" data-class="c-sidebar-show">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <ul class="c-header-nav">
+            <a class="navbar-brand" href="#">
+              <%= image_tag 'logo-header.png', width: 53, height: 53 %>
+              <span class="site-title">RV Care</span>
+            </a>
+          </ul>
+        </nav>
+      </header>
+      <div class="c-body">
+        <main class="main">
+          <%= yield :top_menu %>
+          <div class="flash_messages">
+            <%= render partial: "layouts/partials/flashes", locals: { flash: flash } %>
+          </div>
+          <div class="container-fluid">
+            <%= yield %>
+          </div>
+        </main>
+      </div>
+      <footer class="c-footer">
+        <strong>
+          <span>©</span>
+          <%= Date.today.strftime("%Y") %>
+          RV Care
+        </strong>
+        <div class="ml-auto">
+          <%= app_version %>
+        </div>
+      </footer>
     </div>
-    <div class="container-fluid">
-      <%= yield %>
-    </div>
-  </main>
-</div>
-<footer class="app-footer">
-  <strong>
-    <span>©</span>
-    <%= Date.today.strftime("%Y") %>
-    RV Care
-  </strong>
-  <div class="ml-auto">
-    <%= app_version %>
-  </div>
-</footer>
-</body>
+  </body>
 </html>

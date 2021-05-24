@@ -10,5 +10,11 @@ FactoryBot.define do
         user.add_role :admin
       end
     end
+
+    trait :with_fullscreen_dashboard_widget do
+      after(:build) do |user|
+        user.widgets << create(:widget, :fullscreen, category_list: ['dashboard'])
+      end
+    end
   end
 end

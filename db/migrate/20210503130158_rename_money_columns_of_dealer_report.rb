@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameMoneyColumnsOfDealerReport < ActiveRecord::Migration[6.1]
   def change
     rename_column :dealer_reports, :new_units_volume_cents, :new_units_volume

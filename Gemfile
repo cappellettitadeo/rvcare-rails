@@ -34,6 +34,7 @@ gem 'arctic_admin'
 gem 'jsoneditor-rails'
 
 gem 'activerecord_json_validator'
+gem 'acts-as-taggable-on', '~> 7.0'
 gem 'humanize'
 gem 'ledermann-rails-settings'
 gem 'liquid'
@@ -43,16 +44,16 @@ gem 'simple_form'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
-gem 'smarter_csv', '~> 1.2.8'
 gem 'money-rails', '~> 1.12'
+gem 'smarter_csv', '~> 1.2.8'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'ammeter'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'pry-byebug'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rails'
@@ -78,6 +79,7 @@ group :test do
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
+  gem 'rails-controller-testing'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'webdrivers'
 end

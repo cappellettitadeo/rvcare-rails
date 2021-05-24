@@ -2,13 +2,14 @@
 
 module ReportsImport
   class BaseImporter
-    def initialize(partner_report: , file:)
+    def initialize(partner_report:, file:)
       @partner_report = partner_report
       @file = file
     end
 
     def call
       return if data.nil?
+
       data.each { |data_item| import(data_item) }
     end
 
@@ -21,7 +22,7 @@ module ReportsImport
     end
 
     def errors_report
-      errors.map { |e| e.values_at(:message, :exception).compact.join(": ") }.join('. ')
+      errors.map { |e| e.values_at(:message, :exception).compact.join(': ') }.join('. ')
     end
 
     def operation_stats
@@ -42,7 +43,7 @@ module ReportsImport
       end
 
       unless custom_id && (dealer = Dealer.find_by(dealer_id_key => custom_id))
-        add_logs(false, "error: dealer not found", data_item)
+        add_logs(false, 'error: dealer not found', data_item)
         return
       end
 
@@ -84,11 +85,9 @@ module ReportsImport
       nil
     end
 
-    def partner_report
-      @partner_report
-    end
+    attr_reader :partner_report
 
-    def register_error(message, exception=nil)
+    def register_error(message, exception = nil)
       errors << { message: message, exception: exception }
     end
 

@@ -66,6 +66,14 @@ class PartnerReport < ApplicationRecord
     save!
   end
 
+  def example
+    @@example ||= [
+      'id, amount, reported_on',
+      '1, 55, 2021-04-10',
+      '2, 56, 2021-04-10'
+    ].freeze
+  end
+
   def default_parameters
     {}
   end

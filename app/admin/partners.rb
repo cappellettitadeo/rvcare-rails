@@ -23,7 +23,7 @@ ActiveAdmin.register Partner do
     actions do |partner|
       if partner.current_report
         link_to 'Upload Reprot', new_admin_report_uploads_path(partner_id: partner.id),
-          target: '_blank', class: 'member_link'
+                target: '_blank', class: 'member_link', rel: 'noopener'
       end
     end
   end
