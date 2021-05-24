@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_25_011111) do
+ActiveRecord::Schema.define(version: 2021_05_25_022849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -277,5 +277,17 @@ ActiveRecord::Schema.define(version: 2021_05_25_011111) do
       partner_reports.total_dealer_share
      FROM (partner_reports
        JOIN partners ON ((partners.id = partner_reports.partner_id)));
+  SQL
+  create_view "dealer_totals", sql_definition: <<-SQL
+      SELECT dealers.company AS dealer,
+      partner_reports.year,
+      sum(results.units) AS total_units,
+      sum(results.sales) AS total_sales,
+      sum(results.amount) AS total_amount
+     FROM (((results
+       JOIN dealers ON ((dealers.id = results.dealer_id)))
+       JOIN partner_reports ON ((partner_reports.id = results.partner_report_id)))
+       JOIN partners ON ((partners.id = partner_reports.partner_id)))
+    GROUP BY dealers.company, partner_reports.year;
   SQL
 end
