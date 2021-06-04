@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_25_022849) do
+ActiveRecord::Schema.define(version: 2021_06_04_230610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -142,7 +142,9 @@ ActiveRecord::Schema.define(version: 2021_05_25_022849) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "sales", default: 0
     t.integer "units", default: 0
+    t.date "reported_on", null: false
     t.index ["dealer_id"], name: "index_results_on_dealer_id"
+    t.index ["partner_report_id", "dealer_id", "reported_on"], name: "results_main_index", unique: true
     t.index ["partner_report_id"], name: "index_results_on_partner_report_id"
   end
 

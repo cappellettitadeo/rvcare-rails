@@ -78,10 +78,10 @@ RSpec.describe PartnerReport, type: :model do
 
     it 'caches results for dealers' do
       report.dealers.each do |dealer|
-        result = report.results.find_by(dealer: dealer)
-        expect(result.amount).to eq(report.calculate_total_dealer_share(dealer: dealer))
-        expect(result.sales).to eq(report.sales.where(dealer: dealer).sum(:value))
-        expect(result.units).to eq(report.units.where(dealer: dealer).sum(:value))
+        result = report.results.where(dealer: dealer)
+        expect(result.sum(:amount)).to eq(report.calculate_total_dealer_share(dealer: dealer))
+        expect(result.sum(:sales)).to eq(report.sales.where(dealer: dealer).sum(:value))
+        expect(result.sum(:units)).to eq(report.units.where(dealer: dealer).sum(:value))
       end
     end
 

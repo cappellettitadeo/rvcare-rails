@@ -11,7 +11,7 @@ class PartnerReport < ApplicationRecord
   has_many :entries, dependent: :destroy
   has_many :units, class_name: 'Units'
   has_many :sales, class_name: 'Sales'
-  has_many :dealers, through: :entries
+  has_many :dealers, -> { distinct }, through: :entries
   has_many :results, dependent: :destroy
 
   validates :type, uniqueness: { scope: %i[partner_id year] }
@@ -51,11 +51,16 @@ class PartnerReport < ApplicationRecord
 
   def cache_results!
     results.delete_all
-    dealers.each do |dealer|
-      results.create!(dealer: dealer,
-                      sales: select_sales(dealer: dealer).sum(:value),
-                      units: select_units(dealer: dealer).sum(:value),
-                      amount: calculate_total_dealer_share(dealer: dealer))
+    (1..12).each do |month|
+      reported_on = Date.new(year, month, 1).end_of_month
+      select_date_range = Date.new(year, month, 1)..reported_on
+      dealers.each do |dealer|
+        results.create!(dealer: dealer,
+                        reported_on: reported_on,
+                        sales: select_sales(reported_on: select_date_range, dealer: dealer).sum(:value),
+                        units: select_units(reported_on: select_date_range, dealer: dealer).sum(:value),
+                        amount: calculate_total_dealer_share(reported_on: select_date_range, dealer: dealer))
+      end
     end
 
     self.total_units = calculate_total_units

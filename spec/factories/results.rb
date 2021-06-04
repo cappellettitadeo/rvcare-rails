@@ -2,8 +2,9 @@
 
 FactoryBot.define do
   factory :result do
-    dealer { nil }
-    partner_report { nil }
+    association(:dealer)
+    association(:partner_report)
     amount { 1 }
+    reported_on { Date.today }
   end
 end
